@@ -1,0 +1,7 @@
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 0; padding: 1rem; background: #f7f7fb; color: #111; }
+.app { max-width: 900px; margin: 0 auto; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; }
+.controls { display:flex; gap: 1rem; margin-bottom: 1rem; }
+button { padding: 0.5rem 1rem; border-radius: 8px; border: 0; cursor:pointer; }
+.pokemon-list { max-height: 200px; overflow:auto; border: 1px solid #eee; padding: 0.5rem; background: white; border-radius: 8px; }
+.round { background: white; padding: 0.5rem; border-radius: 6px; margin-bottom: 0.5rem; border: 1px solid #eee;}
