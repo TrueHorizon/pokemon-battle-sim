@@ -12,10 +12,14 @@ export type PokemonData = {
 
 // normalize any types shape → array of lowercase strings
 export function normalizeTypes(value: PokemonData['types']): string[] {
-  if (Array.isArray(value)) return value.map(t => String(t).toLowerCase());
+  if (Array.isArray(value)) {
+    return value.map(t => String(t).toLowerCase());
+  }
+  
   if (typeof value === 'string') {
     return value.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
   }
+  
   return ['normal']; // fallback
 }
 
@@ -39,7 +43,7 @@ export function loadPokemons(): PokemonData[] {
   // Ensure every item has a normalized types array
   return list.map((p) => ({
     ...p,
-    types: normalizeTypes(p.types),
+    types: normalizeTypes(p.type),
     name: String(p.name),
   }));
 }
@@ -48,3 +52,4 @@ export function getPokemonByName(pokemons: PokemonData[], name: string): Pokemon
   const n = name.trim().toLowerCase();
   return pokemons.find(p => p.name.toLowerCase() === n);
 }
+
