@@ -9,6 +9,7 @@ export type PokemonData = {
   types: string[] | string;        // tolerate string or array
   height?: number;
   weight?: number;
+  base_experience?: number;        // Used for attack and defense calculations
   multipliers?: number[] | number; // Can be floating point array or floating point
   weaknesses: string[] | string;   // Can be and array or a string
 };
