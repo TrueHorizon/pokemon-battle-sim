@@ -7,8 +7,18 @@ app.use(express.json());
 
 const pokemons = loadPokemons();
 
+// Returns the list of pokemons and their information
 app.get('/api/pokemons', (_req, res) => {
-  res.json(pokemons.map(p => ({ name: p.name, types: Array.isArray(p.types) ? p.types : [String(p.types)] })));
+  res.json(pokemons.map(p => ({ 
+    id: p.id,
+    name: p.name,
+    img: p.img,
+    types: Array.isArray(p.types) ? p.types : [String(p.types)],
+    height: p.height,
+    weight: p.weight,
+    multipliers: p.multipliers,
+    weaknesses: p.weaknesses
+   })));
 });
 
 app.post('/api/battle', (req, res) => {
@@ -37,3 +47,4 @@ app.post('/api/battle', (req, res) => {
 });
 
 export default app;
+
