@@ -1,13 +1,16 @@
 import path from 'path';
 import fs from 'fs';
 
+// Pokemon data Object
 export type PokemonData = {
   id?: number;
   name: string;
-  types: string[] | string;   // tolerate string or array
+  img: string;
+  types: string[] | string;        // tolerate string or array
   height?: number;
   weight?: number;
-  base_experience?: number;
+  multipliers?: number[] | number; // Can be floating point array or floating point
+  weaknesses: string[] | string;   // Can be and array or a string
 };
 
 // normalize any types shape → array of lowercase strings
@@ -23,6 +26,7 @@ export function normalizeTypes(value: PokemonData['types']): string[] {
   return ['normal']; // fallback
 }
 
+// Reads and parses the pokemons.json file
 export function loadPokemons(): PokemonData[] {
   const p = path.join(__dirname, 'data', 'pokemons.json');
   const raw = fs.readFileSync(p, 'utf-8');
@@ -45,9 +49,11 @@ export function loadPokemons(): PokemonData[] {
     ...p,
     types: normalizeTypes(p.type),
     name: String(p.name),
+    weaknesses: normalizeTypes(p.weaknesses),
   }));
 }
 
+// Case insensitive lookup of pokemon by name (because it lowercases the name you pass and the name in the data)
 export function getPokemonByName(pokemons: PokemonData[], name: string): PokemonData | undefined {
   const n = name.trim().toLowerCase();
   return pokemons.find(p => p.name.toLowerCase() === n);
