@@ -1,4 +1,4 @@
-import { PokemonData } from './pokemon';
+import { PokemonData, normalizeTypes } from './pokemon';
 
 export type StatSet = {
   hp: number;
@@ -66,21 +66,17 @@ function typeMultiplier(attackerTypes: string[], defenderTypes: string[]): numbe
  * These formulas are intentionally simple and deterministic given the PokemonData.
  */
 export function deriveStats(p: PokemonData): StatSet {
-  const height = typeof p.height === 'number' ? p.height : 10;
-  const weight = typeof p.weight === 'number' ? p.weight : 100;
+  const height  = typeof p.height === 'number' ? p.height : 10;
+  const weight  = typeof p.weight === 'number' ? p.weight : 100;
   const baseExp = typeof p.base_experience === 'number' ? p.base_experience : 100;
 
-  const hp = Math.max(20, Math.round(50 + (height + weight) / 10));
-  const attack = Math.max(5, Math.round(baseExp / 3 + (p.types?.length ?? 1) * 6 + (p.name.length % 7)));
+  const hp      = Math.max(20, Math.round(50 + (height + weight) / 10));
+  const attack  = Math.max(5, Math.round(baseExp / 3 + (p.types?.length ?? 1) * 6 + (p.name.length % 7)));
   const defense = Math.max(3, Math.round(baseExp / 4 + weight / 50 + (p.name.length % 5)));
 
-  return {
-    hp,
-    attack,
-    defense,
-    types: p.types.map(t => t.toLowerCase()),
-    name: p.name
-  };
+  const types   = normalizeTypes(p.types);
+
+  return { hp, attack, defense, types, name: p.name };
 }
 
 /**
