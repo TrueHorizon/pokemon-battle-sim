@@ -121,8 +121,8 @@ export function simulateBattle(a: PokemonData, b: PokemonData): BattleResult {
       const damage = Math.max(1, Math.round(baseRaw * tMult * rand));
 
       let note: string | undefined;
-      if (tMult > 1.5) note = 'super effective';
-      else if (tMult < 0.75) note = 'not very effective';
+      if (tMult > 1.5) note = 'It\'s super effective!';
+      else if (tMult < 0.75) note = 'It\'s not very effective...';
 
       if (attacker === A) {
         hpB -= damage;
